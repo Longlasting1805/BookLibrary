@@ -24,11 +24,12 @@ from django.conf.urls.static import static
 from catalog import views, urls
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('catalog/', include('catalog.urls')),
-    path('books/', views.BookListView.as_view(), name='books'),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('book/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),
-    path('', RedirectView.as_view(url='catalog/', permanent=True)),
+                  path('admin/', admin.site.urls),
+                  path('catalog/', include('catalog.urls')),
+                  path('books/', views.BookListView.as_view(), name='books'),
+                  path('accounts/', include('django.contrib.auth.urls')),
+                  path('book/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),
+                  path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'),
+                  path('', RedirectView.as_view(url='catalog/', permanent=True)),
 
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+              ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,7 +1,8 @@
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from .models import Book, Author, BookInstance, Genre
-from django.views import generic
+from django.views import generic, View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
@@ -46,3 +47,16 @@ def index(request):
     return render(request, 'index.html', context=context)
 
 
+class MyView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+
+
+class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
+    """Generic class-based view listing books on loan to current user."""
+    model = BookInstance
+    template_name = 'catalog/bookinstance_list_borrowed_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
