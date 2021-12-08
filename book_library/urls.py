@@ -21,7 +21,7 @@ from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
 
-from catalog import views, urls
+from catalog import views
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
@@ -30,6 +30,12 @@ urlpatterns = [
                   path('accounts/', include('django.contrib.auth.urls')),
                   path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'),
                   path('', RedirectView.as_view(url='catalog/', permanent=True)),
+                  path('book/<uuid:pk>/renew/', views.renew_book_librarian, name='renew-book-librarian'),
+
                   path('book/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),
 
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+
+
