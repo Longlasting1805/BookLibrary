@@ -9,6 +9,9 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from catalog.forms import RenewBookForm
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from catalog.models import Author
 
 
 # Create your views here.
@@ -44,8 +47,8 @@ def index(request):
 
     context = {
         'new_books': num_books,
-        'new instance': num_instance,
-        'new instances_available': num_instances_available,
+        'new_instance': num_instance,
+        'new_instances_available': num_instances_available,
         'num_authors': num_authors,
     }
 
@@ -103,3 +106,19 @@ def renew_book_librarian(request, pk):
         }
 
         return render(request, 'book_renew_liberian.html', context)
+
+
+class AuthorCreate(CreateView):
+    model = Author
+    fields = ['first_name', 'last_name', 'dob', 'dod']
+    initial = {'date_of_death': '11/06/2020'}
+
+
+class AuthorUpdate(UpdateView):
+    model = Author
+    fields = '__all__'  # Not recommended (potential security issue if more fields added)
+
+
+class AuthorDelete(DeleteView):
+    model = Author
+    success_url = reverse_lazy('authors')

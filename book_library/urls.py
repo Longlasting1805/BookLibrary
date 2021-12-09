@@ -31,8 +31,8 @@ urlpatterns = [
                   path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'),
                   path('', RedirectView.as_view(url='catalog/', permanent=True)),
                   path('book/<uuid:pk>/renew/', views.renew_book_librarian, name='renew-book-librarian'),
-
                   path('book/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),
+
 
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
