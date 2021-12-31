@@ -9,6 +9,15 @@
     {% csrf_token %}
     <table>
     {{ form.as_table }}
+    {{ form.as_ul }}
+    {{ form.renewal_date }}
+    {{ form.renewal_date.errors }}
+    {{ form.renewal_date.id_for_label }}
+    {{ form.renewal_date.help_text }}
+    {% if perms.catalog.can_mark_returned %}
+       - <a href="{% url 'renew-book-librarian' bookinst.id %}">Renew</a>
+    {% endif %}
+
     </table>
     <input type="submit" value="Submit">
   </form>

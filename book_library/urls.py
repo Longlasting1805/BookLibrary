@@ -20,8 +20,27 @@ from django.urls import include
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework import routers
 
 from catalog import views
+
+# router = routers.DefaultRouter()
+# router.register(r'admin', admin.site.urls, basename='admin')
+# router.register(r'catalog')
+# urlpatterns = [
+#                   path('admin/', admin.site.urls),
+#                   path('catalog/', include('catalog.urls')),
+#                   path('books/', views.BookListView.as_view(), name='books'),
+#                   path('accounts/', include('django.contrib.auth.urls')),
+#                   path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'),
+#                   path('', RedirectView.as_view(url='catalog/', permanent=True)),
+#                   path('book/<uuid:pk>/renew/', views.renew_book_librarian, name='renew-book-librarian'),
+#                   path('book/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),
+#
+#
+#               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+#
+
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
@@ -35,7 +54,4 @@ urlpatterns = [
 
 
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-
-
 
