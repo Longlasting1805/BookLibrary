@@ -12,6 +12,7 @@ from catalog.forms import RenewBookForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from catalog.models import Author
+from .serializers import BookSerializer
 
 
 # Create your views here.

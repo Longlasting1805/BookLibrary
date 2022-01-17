@@ -25,25 +25,29 @@ from catalog.views import BookListView, LoanedBooksByUserListView, renew_book_li
 
 from catalog import views
 
-router = routers.DefaultRouter()
-router.register(r'Books', BookListView, basename='books')
-router.register(r'LoanedBook', LoanedBooksByUserListView, basename='My-borrowed')
-router.register(r'renew_book_liberian', renew_book_librarian, basename='renew_book_liberian')
-router.register(r'Book-Detail', BookDetailView, basename='Book-Detail')
-urlpatterns = router.urls
-# urlpatterns = [
-#                   path('admin/', admin.site.urls),
-#                   path('catalog/', include('catalog.urls')),
-#                   path('books/', views.BookListView.as_view(), name='books'),
-#                   path('accounts/', include('django.contrib.auth.urls')),
-#                   path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'),
-#                   path('', RedirectView.as_view(url='catalog/', permanent=True)),
-#                   path('book/<uuid:pk>/renew/', views.renew_book_librarian, name='renew-book-librarian'),
-#                   path('book/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),
-#
-#
-#               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-#
+# router = routers.DefaultRouter()
+# router.register(r'Books', BookListView, basename='books')
+# router.register(r'LoanedBook', LoanedBooksByUserListView, basename='My-borrowed')
+# router.register(r'renew_book_liberian', renew_book_librarian, basename='renew_book_liberian')
+# router.register(r'Book-Detail', BookDetailView, basename='Book-Detail')
+# urlpatterns = router.urls
+urlpatterns = [
+                  path('admin/', admin.site.urls),
+                  path('catalog/', include('catalog.urls')),
+                  path('books/', views.BookListView.as_view(), name='books'),
+                  path('accounts/', include('django.contrib.auth.urls')),
+                  path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'),
+                  path('', RedirectView.as_view(url='catalog/', permanent=True)),
+                  path('book/<uuid:pk>/renew/', views.renew_book_librarian, name='renew-book-librarian'),
+                  path('book/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),
+
+           ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+
+
+
+
 
 
 # urlpatterns = [
