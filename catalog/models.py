@@ -24,11 +24,15 @@ class Book(models.Model):
                                       '<a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
     genre = models.ManyToManyField(Genre, help_text='select a genre for this book')
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(args, kwargs)
+        self.id = None
+
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('book-detail', args=[str(self.id)])
+        return reverse('book-d  etail', args=[str(self.id)])
 
     def display_genre(self):
         """Create a string for the Genre. This is required to display genre in Admin."""
@@ -61,7 +65,7 @@ class BookInstance(models.Model):
     )
 
     class Meta:
-        permissions = (("can_mark_returned", "Set book as returned"),)
+        ordering = ['due_back']
 
     def __str__(self):
         # """String for representing the Model object."""

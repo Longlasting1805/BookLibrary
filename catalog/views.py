@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, permission_required
 from .models import Book, Author, BookInstance, Genre
 from django.views import generic, View
@@ -30,7 +30,7 @@ class BookDetailView(generic.DetailView):
 
     def book_detail_view(request, primary_key):
         book = get_object_or_404(Book, pk=primary_key)
-        return render(request, 'book_detail.html', context={'book': book})
+        return render(request, 'catalog/book_detail.html', context={'book': book})
 
 
 def index(request):
@@ -64,18 +64,13 @@ class MyView(LoginRequiredMixin, PermissionRequiredMixin, View):
 
 
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
-    #         Generic class-based view listing books on loan to current user
+    # Generic class-based view listing books on loan to current user
     model = BookInstance
     template_name = 'book_instance_list_borrowed_user.html'
     paginate_by = 10
 
     def get_queryset(self):
         return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
-
-    # @login_required
-    # @permission_required('can_mark_returned', raise_exception=True)
-    # def my_view(request):
-    #     ...
 
 
 @login_required
