@@ -24,15 +24,15 @@ class Book(models.Model):
                                       '<a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
     genre = models.ManyToManyField(Genre, help_text='select a genre for this book')
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(args, kwargs)
-        self.id = None
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(args, kwargs)
+    #     self.id = None
 
     def __str__(self):
-        return self.title
+        return self.author
 
     def get_absolute_url(self):
-        return reverse('book-d  etail', args=[str(self.id)])
+        return reverse('book-detail', args=[str(self.id)])
 
     def display_genre(self):
         """Create a string for the Genre. This is required to display genre in Admin."""
@@ -65,7 +65,7 @@ class BookInstance(models.Model):
     )
 
     class Meta:
-        ordering = ['due_back']
+        ordering = ['-due_back']
 
     def __str__(self):
         # """String for representing the Model object."""
@@ -84,13 +84,13 @@ class Author(models.Model):
     dob = models.DateTimeField(null=True, blank=True)
     dod = models.DateTimeField('Died', null=True, blank=True)
 
-    class Meta:
-        ordering = ['last_name', 'first_name']
-
     def get_absolute_url(self):
         # """Returns the url to access a particular author instance."""
         return reverse('author-detail', args=[str(self.id)])
 
     def __str__(self):
         # """String for representing the Model object."""
-        return f'{self.first_name}, {self.last_name}'
+        return f'{self.last_name}, {self.first_name}'
+
+    class Meta:
+        ordering = ['last_name']

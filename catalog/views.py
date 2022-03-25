@@ -19,10 +19,17 @@ from .serializers import BookSerializer
 
 class BookListView(generic.ListView):
     model = Book
-    paginate_by = 2
+    context_object_name = 'book_list'
+    # paginate_by = 2
+    template_name = 'catalog/book_list.html'
 
     def get_queryset(self):
         return Book.objects.filter(title__icontains='war')[:5]  # Get 5 books containing the title war
+
+    def get_context_data(self, **kwargs):
+        context = super(BookListView, self).get_context_data(**kwargs)
+        context['some_data'] = 'This is just some data'
+        return context
 
 
 class BookDetailView(generic.DetailView):
