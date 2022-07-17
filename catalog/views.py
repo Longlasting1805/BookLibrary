@@ -24,7 +24,7 @@ class BookListView(generic.ListView):
     template_name = 'catalog/book_list.html'
 
     def get_queryset(self):
-        return Book.objects.filter(title__icontains='war')[:5]  # Get 5 books containing the title war
+        return Book.objects.all()  # Get 5 books containing the title war
 
     def get_context_data(self, **kwargs):
         context = super(BookListView, self).get_context_data(**kwargs)
@@ -36,8 +36,8 @@ class BookDetailView(generic.DetailView):
     model = Book
 
     def book_detail_view(request, primary_key):
-        book = get_object_or_404(Book, pk=primary_key)
-        return render(request, 'catalog/book_detail.html', context={'book': book})
+        books = get_object_or_404(Book, pk=primary_key)
+        return render(request, 'catalog/book_detail.html', context={'book': books})
 
 
 def index(request):
@@ -58,6 +58,7 @@ def index(request):
         'new_instance': num_instance,
         'new_instances_available': num_instances_available,
         'num_authors': num_authors,
+        'num_visits': num_visits,
     }
 
     # Render the HTML template index.html with the data in the context variable
@@ -109,6 +110,29 @@ def renew_book_librarian(request, pk):
         }
 
         return render(request, 'book_renew_liberian.html', context)
+
+
+class AuthorListView(generic.ListView):
+    model = Author
+    context_object_name = 'author_list'
+    # paginate_by = 2
+    template_name = 'catalog/author_list.html'
+
+    def get_queryset(self):
+        return Author.objects.all()  # Get 5 books containing the title war
+
+    def get_context_data(self, **kwargs):
+        context = super(AuthorListView, self).get_context_data(**kwargs)
+        context['some_data'] = 'This is just some data'
+        return context
+
+
+class AuthorDetailView(generic.DetailView):
+    model = Author
+
+    def author_detail_view(self, primary_key):
+        authors = get_object_or_404(Book, pk=primary_key)
+        return render(self, 'catalog/author_detail.html', context={'authors': authors})
 
 
 class AuthorCreate(CreateView):
