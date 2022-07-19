@@ -11,7 +11,7 @@ from django.urls import reverse
 from catalog.forms import RenewBookForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from catalog.models import Author
+# from catalog.models import Author
 from .serializers import BookSerializer
 
 
@@ -137,7 +137,7 @@ class AuthorDetailView(generic.DetailView):
 
 class AuthorCreate(CreateView):
     model = Author
-    fields = ['first_name', 'last_name', 'dob', 'dod']
+    fields = ['first_name', 'last_name', 'dob', 'died']
     initial = {'date_of_death': '11/06/2020'}
 
 

@@ -82,7 +82,7 @@ class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     dob = models.DateTimeField(null=True, blank=True)
-    dod = models.DateTimeField('Died', null=True, blank=True)
+    died = models.DateTimeField('died', null=True, blank=True)
 
     def get_absolute_url(self):
         # """Returns the url to access a particular author instance."""
