@@ -74,7 +74,7 @@ class MyView(LoginRequiredMixin, PermissionRequiredMixin, View):
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     # Generic class-based view listing books on loan to current user
     model = BookInstance
-    template_name = 'book_instance_list_borrowed_user.html'
+    template_name = 'catalog/book_instance_list_borrowed_user.html'
     paginate_by = 10
 
     def get_queryset(self):
@@ -109,7 +109,7 @@ def renew_book_librarian(request, pk):
             'book_instance': book_instance,
         }
 
-        return render(request, 'book_renew_liberian.html', context)
+        return render(request, 'catalog/book_renew_liberian.html', context)
 
 
 class AuthorListView(generic.ListView):
@@ -149,3 +149,8 @@ class AuthorUpdate(UpdateView):
 class AuthorDelete(DeleteView):
     model = Author
     success_url = reverse_lazy('authors')
+
+
+class BookCreate(CreateView):
+    model = Book
+    fields = '__all__'
